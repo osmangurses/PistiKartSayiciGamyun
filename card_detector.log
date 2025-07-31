@@ -7630,3 +7630,225 @@
 2025-07-31 05:11:05,498 - INFO - Kart þablonu yüklendi: Spades Three
 2025-07-31 05:11:05,498 - INFO - Kart þablonu yüklendi: Spades Two
 2025-07-31 05:11:05,499 - INFO - Toplam 52 kart þablonu yüklendi
+2025-07-31 05:16:24,885 - INFO - Kart þablonu yüklendi: Clubs Ace
+2025-07-31 05:16:24,885 - INFO - Kart þablonu yüklendi: Clubs Eight
+2025-07-31 05:16:24,886 - INFO - Kart þablonu yüklendi: Clubs Five
+2025-07-31 05:16:24,886 - INFO - Kart þablonu yüklendi: Clubs Four
+2025-07-31 05:16:24,887 - INFO - Kart þablonu yüklendi: Clubs Jack
+2025-07-31 05:16:24,887 - INFO - Kart þablonu yüklendi: Clubs King
+2025-07-31 05:16:24,888 - INFO - Kart þablonu yüklendi: Clubs Nine
+2025-07-31 05:16:24,888 - INFO - Kart þablonu yüklendi: Clubs Queen
+2025-07-31 05:16:24,889 - INFO - Kart þablonu yüklendi: Clubs Seven
+2025-07-31 05:16:24,889 - INFO - Kart þablonu yüklendi: Clubs Six
+2025-07-31 05:16:24,889 - INFO - Kart þablonu yüklendi: Clubs Ten
+2025-07-31 05:16:24,890 - INFO - Kart þablonu yüklendi: Clubs Three
+2025-07-31 05:16:24,890 - INFO - Kart þablonu yüklendi: Clubs Two
+2025-07-31 05:16:24,890 - INFO - Kart þablonu yüklendi: Diamonds Ace
+2025-07-31 05:16:24,891 - INFO - Kart þablonu yüklendi: Diamonds Eight
+2025-07-31 05:16:24,891 - INFO - Kart þablonu yüklendi: Diamonds Five
+2025-07-31 05:16:24,892 - INFO - Kart þablonu yüklendi: Diamonds Four
+2025-07-31 05:16:24,892 - INFO - Kart þablonu yüklendi: Diamonds Jack
+2025-07-31 05:16:24,892 - INFO - Kart þablonu yüklendi: Diamonds King
+2025-07-31 05:16:24,893 - INFO - Kart þablonu yüklendi: Diamonds Nine
+2025-07-31 05:16:24,893 - INFO - Kart þablonu yüklendi: Diamonds Queen
+2025-07-31 05:16:24,893 - INFO - Kart þablonu yüklendi: Diamonds Seven
+2025-07-31 05:16:24,894 - INFO - Kart þablonu yüklendi: Diamonds Six
+2025-07-31 05:16:24,894 - INFO - Kart þablonu yüklendi: Diamonds Ten
+2025-07-31 05:16:24,894 - INFO - Kart þablonu yüklendi: Diamonds Three
+2025-07-31 05:16:24,895 - INFO - Kart þablonu yüklendi: Diamonds Two
+2025-07-31 05:16:24,895 - INFO - Kart þablonu yüklendi: Hearts Ace
+2025-07-31 05:16:24,896 - INFO - Kart þablonu yüklendi: Hearts Eight
+2025-07-31 05:16:24,896 - INFO - Kart þablonu yüklendi: Hearts Five
+2025-07-31 05:16:24,897 - INFO - Kart þablonu yüklendi: Hearts Four
+2025-07-31 05:16:24,897 - INFO - Kart þablonu yüklendi: Hearts Jack
+2025-07-31 05:16:24,897 - INFO - Kart þablonu yüklendi: Hearts King
+2025-07-31 05:16:24,898 - INFO - Kart þablonu yüklendi: Hearts Nine
+2025-07-31 05:16:24,898 - INFO - Kart þablonu yüklendi: Hearts Queen
+2025-07-31 05:16:24,899 - INFO - Kart þablonu yüklendi: Hearts Seven
+2025-07-31 05:16:24,899 - INFO - Kart þablonu yüklendi: Hearts Six
+2025-07-31 05:16:24,900 - INFO - Kart þablonu yüklendi: Hearts Ten
+2025-07-31 05:16:24,900 - INFO - Kart þablonu yüklendi: Hearts Three
+2025-07-31 05:16:24,900 - INFO - Kart þablonu yüklendi: Hearts Two
+2025-07-31 05:16:24,901 - INFO - Kart þablonu yüklendi: Spades Ace
+2025-07-31 05:16:24,901 - INFO - Kart þablonu yüklendi: Spades Eight
+2025-07-31 05:16:24,901 - INFO - Kart þablonu yüklendi: Spades Five
+2025-07-31 05:16:24,902 - INFO - Kart þablonu yüklendi: Spades Four
+2025-07-31 05:16:24,902 - INFO - Kart þablonu yüklendi: Spades Jack
+2025-07-31 05:16:24,903 - INFO - Kart þablonu yüklendi: Spades King
+2025-07-31 05:16:24,903 - INFO - Kart þablonu yüklendi: Spades Nine
+2025-07-31 05:16:24,904 - INFO - Kart þablonu yüklendi: Spades Queen
+2025-07-31 05:16:24,904 - INFO - Kart þablonu yüklendi: Spades Seven
+2025-07-31 05:16:24,904 - INFO - Kart þablonu yüklendi: Spades Six
+2025-07-31 05:16:24,905 - INFO - Kart þablonu yüklendi: Spades Ten
+2025-07-31 05:16:24,905 - INFO - Kart þablonu yüklendi: Spades Three
+2025-07-31 05:16:24,906 - INFO - Kart þablonu yüklendi: Spades Two
+2025-07-31 05:16:24,906 - INFO - Toplam 52 kart þablonu yüklendi
+2025-07-31 05:16:32,593 - INFO - Kart tespit edildi: Spades Five (güven: 1.00)
+2025-07-31 05:16:32,639 - INFO - Kart tespit edildi: Spades Seven (güven: 1.00)
+2025-07-31 05:17:25,060 - INFO - Kart þablonu yüklendi: Clubs Ace
+2025-07-31 05:17:25,060 - INFO - Kart þablonu yüklendi: Clubs Eight
+2025-07-31 05:17:25,061 - INFO - Kart þablonu yüklendi: Clubs Five
+2025-07-31 05:17:25,061 - INFO - Kart þablonu yüklendi: Clubs Four
+2025-07-31 05:17:25,062 - INFO - Kart þablonu yüklendi: Clubs Jack
+2025-07-31 05:17:25,062 - INFO - Kart þablonu yüklendi: Clubs King
+2025-07-31 05:17:25,063 - INFO - Kart þablonu yüklendi: Clubs Nine
+2025-07-31 05:17:25,063 - INFO - Kart þablonu yüklendi: Clubs Queen
+2025-07-31 05:17:25,064 - INFO - Kart þablonu yüklendi: Clubs Seven
+2025-07-31 05:17:25,064 - INFO - Kart þablonu yüklendi: Clubs Six
+2025-07-31 05:17:25,064 - INFO - Kart þablonu yüklendi: Clubs Ten
+2025-07-31 05:17:25,065 - INFO - Kart þablonu yüklendi: Clubs Three
+2025-07-31 05:17:25,065 - INFO - Kart þablonu yüklendi: Clubs Two
+2025-07-31 05:17:25,066 - INFO - Kart þablonu yüklendi: Diamonds Ace
+2025-07-31 05:17:25,066 - INFO - Kart þablonu yüklendi: Diamonds Eight
+2025-07-31 05:17:25,066 - INFO - Kart þablonu yüklendi: Diamonds Five
+2025-07-31 05:17:25,067 - INFO - Kart þablonu yüklendi: Diamonds Four
+2025-07-31 05:17:25,067 - INFO - Kart þablonu yüklendi: Diamonds Jack
+2025-07-31 05:17:25,068 - INFO - Kart þablonu yüklendi: Diamonds King
+2025-07-31 05:17:25,068 - INFO - Kart þablonu yüklendi: Diamonds Nine
+2025-07-31 05:17:25,068 - INFO - Kart þablonu yüklendi: Diamonds Queen
+2025-07-31 05:17:25,069 - INFO - Kart þablonu yüklendi: Diamonds Seven
+2025-07-31 05:17:25,069 - INFO - Kart þablonu yüklendi: Diamonds Six
+2025-07-31 05:17:25,069 - INFO - Kart þablonu yüklendi: Diamonds Ten
+2025-07-31 05:17:25,070 - INFO - Kart þablonu yüklendi: Diamonds Three
+2025-07-31 05:17:25,070 - INFO - Kart þablonu yüklendi: Diamonds Two
+2025-07-31 05:17:25,071 - INFO - Kart þablonu yüklendi: Hearts Ace
+2025-07-31 05:17:25,071 - INFO - Kart þablonu yüklendi: Hearts Eight
+2025-07-31 05:17:25,071 - INFO - Kart þablonu yüklendi: Hearts Five
+2025-07-31 05:17:25,072 - INFO - Kart þablonu yüklendi: Hearts Four
+2025-07-31 05:17:25,073 - INFO - Kart þablonu yüklendi: Hearts Jack
+2025-07-31 05:17:25,073 - INFO - Kart þablonu yüklendi: Hearts King
+2025-07-31 05:17:25,074 - INFO - Kart þablonu yüklendi: Hearts Nine
+2025-07-31 05:17:25,074 - INFO - Kart þablonu yüklendi: Hearts Queen
+2025-07-31 05:17:25,074 - INFO - Kart þablonu yüklendi: Hearts Seven
+2025-07-31 05:17:25,075 - INFO - Kart þablonu yüklendi: Hearts Six
+2025-07-31 05:17:25,075 - INFO - Kart þablonu yüklendi: Hearts Ten
+2025-07-31 05:17:25,076 - INFO - Kart þablonu yüklendi: Hearts Three
+2025-07-31 05:17:25,076 - INFO - Kart þablonu yüklendi: Hearts Two
+2025-07-31 05:17:25,076 - INFO - Kart þablonu yüklendi: Spades Ace
+2025-07-31 05:17:25,077 - INFO - Kart þablonu yüklendi: Spades Eight
+2025-07-31 05:17:25,077 - INFO - Kart þablonu yüklendi: Spades Five
+2025-07-31 05:17:25,077 - INFO - Kart þablonu yüklendi: Spades Four
+2025-07-31 05:17:25,078 - INFO - Kart þablonu yüklendi: Spades Jack
+2025-07-31 05:17:25,078 - INFO - Kart þablonu yüklendi: Spades King
+2025-07-31 05:17:25,078 - INFO - Kart þablonu yüklendi: Spades Nine
+2025-07-31 05:17:25,079 - INFO - Kart þablonu yüklendi: Spades Queen
+2025-07-31 05:17:25,079 - INFO - Kart þablonu yüklendi: Spades Seven
+2025-07-31 05:17:25,080 - INFO - Kart þablonu yüklendi: Spades Six
+2025-07-31 05:17:25,080 - INFO - Kart þablonu yüklendi: Spades Ten
+2025-07-31 05:17:25,081 - INFO - Kart þablonu yüklendi: Spades Three
+2025-07-31 05:17:25,081 - INFO - Kart þablonu yüklendi: Spades Two
+2025-07-31 05:17:25,081 - INFO - Toplam 52 kart þablonu yüklendi
+2025-07-31 05:17:30,618 - INFO - Kart tespit edildi: Spades Five (güven: 1.00)
+2025-07-31 05:17:30,657 - INFO - Kart tespit edildi: Spades Seven (güven: 1.00)
+2025-07-31 05:22:06,910 - INFO - Kart þablonu yüklendi: Clubs Ace
+2025-07-31 05:22:06,910 - INFO - Kart þablonu yüklendi: Clubs Eight
+2025-07-31 05:22:06,911 - INFO - Kart þablonu yüklendi: Clubs Five
+2025-07-31 05:22:06,911 - INFO - Kart þablonu yüklendi: Clubs Four
+2025-07-31 05:22:06,912 - INFO - Kart þablonu yüklendi: Clubs Jack
+2025-07-31 05:22:06,912 - INFO - Kart þablonu yüklendi: Clubs King
+2025-07-31 05:22:06,912 - INFO - Kart þablonu yüklendi: Clubs Nine
+2025-07-31 05:22:06,913 - INFO - Kart þablonu yüklendi: Clubs Queen
+2025-07-31 05:22:06,913 - INFO - Kart þablonu yüklendi: Clubs Seven
+2025-07-31 05:22:06,913 - INFO - Kart þablonu yüklendi: Clubs Six
+2025-07-31 05:22:06,914 - INFO - Kart þablonu yüklendi: Clubs Ten
+2025-07-31 05:22:06,914 - INFO - Kart þablonu yüklendi: Clubs Three
+2025-07-31 05:22:06,915 - INFO - Kart þablonu yüklendi: Clubs Two
+2025-07-31 05:22:06,915 - INFO - Kart þablonu yüklendi: Diamonds Ace
+2025-07-31 05:22:06,916 - INFO - Kart þablonu yüklendi: Diamonds Eight
+2025-07-31 05:22:06,916 - INFO - Kart þablonu yüklendi: Diamonds Five
+2025-07-31 05:22:06,916 - INFO - Kart þablonu yüklendi: Diamonds Four
+2025-07-31 05:22:06,917 - INFO - Kart þablonu yüklendi: Diamonds Jack
+2025-07-31 05:22:06,917 - INFO - Kart þablonu yüklendi: Diamonds King
+2025-07-31 05:22:06,918 - INFO - Kart þablonu yüklendi: Diamonds Nine
+2025-07-31 05:22:06,918 - INFO - Kart þablonu yüklendi: Diamonds Queen
+2025-07-31 05:22:06,919 - INFO - Kart þablonu yüklendi: Diamonds Seven
+2025-07-31 05:22:06,919 - INFO - Kart þablonu yüklendi: Diamonds Six
+2025-07-31 05:22:06,920 - INFO - Kart þablonu yüklendi: Diamonds Ten
+2025-07-31 05:22:06,920 - INFO - Kart þablonu yüklendi: Diamonds Three
+2025-07-31 05:22:06,920 - INFO - Kart þablonu yüklendi: Diamonds Two
+2025-07-31 05:22:06,921 - INFO - Kart þablonu yüklendi: Hearts Ace
+2025-07-31 05:22:06,921 - INFO - Kart þablonu yüklendi: Hearts Eight
+2025-07-31 05:22:06,922 - INFO - Kart þablonu yüklendi: Hearts Five
+2025-07-31 05:22:06,922 - INFO - Kart þablonu yüklendi: Hearts Four
+2025-07-31 05:22:06,922 - INFO - Kart þablonu yüklendi: Hearts Jack
+2025-07-31 05:22:06,923 - INFO - Kart þablonu yüklendi: Hearts King
+2025-07-31 05:22:06,923 - INFO - Kart þablonu yüklendi: Hearts Nine
+2025-07-31 05:22:06,924 - INFO - Kart þablonu yüklendi: Hearts Queen
+2025-07-31 05:22:06,924 - INFO - Kart þablonu yüklendi: Hearts Seven
+2025-07-31 05:22:06,925 - INFO - Kart þablonu yüklendi: Hearts Six
+2025-07-31 05:22:06,926 - INFO - Kart þablonu yüklendi: Hearts Ten
+2025-07-31 05:22:06,926 - INFO - Kart þablonu yüklendi: Hearts Three
+2025-07-31 05:22:06,927 - INFO - Kart þablonu yüklendi: Hearts Two
+2025-07-31 05:22:06,927 - INFO - Kart þablonu yüklendi: Spades Ace
+2025-07-31 05:22:06,927 - INFO - Kart þablonu yüklendi: Spades Eight
+2025-07-31 05:22:06,928 - INFO - Kart þablonu yüklendi: Spades Five
+2025-07-31 05:22:06,928 - INFO - Kart þablonu yüklendi: Spades Four
+2025-07-31 05:22:06,929 - INFO - Kart þablonu yüklendi: Spades Jack
+2025-07-31 05:22:06,929 - INFO - Kart þablonu yüklendi: Spades King
+2025-07-31 05:22:06,929 - INFO - Kart þablonu yüklendi: Spades Nine
+2025-07-31 05:22:06,930 - INFO - Kart þablonu yüklendi: Spades Queen
+2025-07-31 05:22:06,930 - INFO - Kart þablonu yüklendi: Spades Seven
+2025-07-31 05:22:06,930 - INFO - Kart þablonu yüklendi: Spades Six
+2025-07-31 05:22:06,931 - INFO - Kart þablonu yüklendi: Spades Ten
+2025-07-31 05:22:06,931 - INFO - Kart þablonu yüklendi: Spades Three
+2025-07-31 05:22:06,932 - INFO - Kart þablonu yüklendi: Spades Two
+2025-07-31 05:22:06,932 - INFO - Toplam 52 kart þablonu yüklendi
+2025-07-31 05:22:18,911 - INFO - Kart tespit edildi: Spades Five (güven: 1.00)
+2025-07-31 05:22:18,949 - INFO - Kart tespit edildi: Spades Seven (güven: 1.00)
+2025-07-31 05:24:51,104 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Ace (26x50 -> 13x25)
+2025-07-31 05:24:51,105 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Eight (26x50 -> 13x25)
+2025-07-31 05:24:51,105 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Five (26x50 -> 13x25)
+2025-07-31 05:24:51,106 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Four (26x50 -> 13x25)
+2025-07-31 05:24:51,106 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Jack (26x50 -> 13x25)
+2025-07-31 05:24:51,107 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs King (26x50 -> 13x25)
+2025-07-31 05:24:51,107 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Nine (26x50 -> 13x25)
+2025-07-31 05:24:51,107 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Queen (26x50 -> 13x25)
+2025-07-31 05:24:51,108 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Seven (26x50 -> 13x25)
+2025-07-31 05:24:51,108 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Six (26x50 -> 13x25)
+2025-07-31 05:24:51,109 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Ten (26x50 -> 13x25)
+2025-07-31 05:24:51,109 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Three (26x50 -> 13x25)
+2025-07-31 05:24:51,110 - INFO - Kart þablonu yüklendi ve küçültüldü: Clubs Two (26x50 -> 13x25)
+2025-07-31 05:24:51,110 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Ace (26x50 -> 13x25)
+2025-07-31 05:24:51,110 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Eight (26x50 -> 13x25)
+2025-07-31 05:24:51,111 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Five (26x50 -> 13x25)
+2025-07-31 05:24:51,111 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Four (26x50 -> 13x25)
+2025-07-31 05:24:51,111 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Jack (26x50 -> 13x25)
+2025-07-31 05:24:51,112 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds King (26x50 -> 13x25)
+2025-07-31 05:24:51,112 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Nine (26x50 -> 13x25)
+2025-07-31 05:24:51,113 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Queen (26x50 -> 13x25)
+2025-07-31 05:24:51,113 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Seven (26x50 -> 13x25)
+2025-07-31 05:24:51,113 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Six (26x50 -> 13x25)
+2025-07-31 05:24:51,114 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Ten (26x50 -> 13x25)
+2025-07-31 05:24:51,114 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Three (26x50 -> 13x25)
+2025-07-31 05:24:51,115 - INFO - Kart þablonu yüklendi ve küçültüldü: Diamonds Two (26x50 -> 13x25)
+2025-07-31 05:24:51,115 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Ace (26x50 -> 13x25)
+2025-07-31 05:24:51,115 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Eight (26x50 -> 13x25)
+2025-07-31 05:24:51,116 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Five (26x50 -> 13x25)
+2025-07-31 05:24:51,116 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Four (26x50 -> 13x25)
+2025-07-31 05:24:51,117 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Jack (26x50 -> 13x25)
+2025-07-31 05:24:51,117 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts King (26x50 -> 13x25)
+2025-07-31 05:24:51,117 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Nine (26x50 -> 13x25)
+2025-07-31 05:24:51,118 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Queen (26x50 -> 13x25)
+2025-07-31 05:24:51,118 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Seven (26x50 -> 13x25)
+2025-07-31 05:24:51,118 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Six (26x50 -> 13x25)
+2025-07-31 05:24:51,119 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Ten (26x50 -> 13x25)
+2025-07-31 05:24:51,119 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Three (26x50 -> 13x25)
+2025-07-31 05:24:51,120 - INFO - Kart þablonu yüklendi ve küçültüldü: Hearts Two (26x50 -> 13x25)
+2025-07-31 05:24:51,120 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Ace (26x50 -> 13x25)
+2025-07-31 05:24:51,121 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Eight (26x50 -> 13x25)
+2025-07-31 05:24:51,121 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Five (26x50 -> 13x25)
+2025-07-31 05:24:51,122 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Four (26x50 -> 13x25)
+2025-07-31 05:24:51,122 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Jack (26x50 -> 13x25)
+2025-07-31 05:24:51,123 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades King (26x50 -> 13x25)
+2025-07-31 05:24:51,123 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Nine (26x50 -> 13x25)
+2025-07-31 05:24:51,124 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Queen (26x50 -> 13x25)
+2025-07-31 05:24:51,124 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Seven (26x50 -> 13x25)
+2025-07-31 05:24:51,125 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Six (26x50 -> 13x25)
+2025-07-31 05:24:51,125 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Ten (26x50 -> 13x25)
+2025-07-31 05:24:51,125 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Three (26x50 -> 13x25)
+2025-07-31 05:24:51,126 - INFO - Kart þablonu yüklendi ve küçültüldü: Spades Two (26x50 -> 13x25)
+2025-07-31 05:24:51,126 - INFO - Toplam 52 kart þablonu yüklendi ve küçültüldü
+2025-07-31 05:24:56,443 - INFO - Kart tespit edildi: Clubs Seven (güven: 0.98)
+2025-07-31 05:24:56,504 - INFO - Kart tespit edildi: Spades Seven (güven: 1.00)
+2025-07-31 05:25:24,755 - INFO - Kart tespit edildi: Clubs Queen (güven: 0.95)
+2025-07-31 05:25:24,802 - INFO - Kart tespit edildi: Spades Queen (güven: 1.00)

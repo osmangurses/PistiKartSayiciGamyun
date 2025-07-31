@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 import numpy as np
 import cv2
 import time
+from mss import mss
 from card_detector import CardDetector
 from card_display import CardDisplay
 
@@ -27,6 +28,9 @@ class ScreenSelector:
         
         # Kart detektörü
         self.card_detector = CardDetector()
+        
+        # MSS instance'ı (hızlı ekran görüntüsü için)
+        self.sct = mss()
         
         # FPS sayacı değişkenleri
         self.fps_start_time = None
@@ -172,11 +176,15 @@ class ScreenSelector:
         try:
             x1, y1, x2, y2 = self.selection_coords
             
-            # Ekran görüntüsü al
-            screenshot = pyautogui.screenshot(region=(x1, y1, x2-x1, y2-y1))
+            # MSS ile hızlı ekran görüntüsü al
+            monitor = {"top": y1, "left": x1, "width": x2-x1, "height": y2-y1}
+            screenshot = self.sct.grab(monitor)
+            
+            # MSS görüntüsünü PIL Image'e çevir
+            screenshot_pil = Image.frombytes("RGB", screenshot.size, screenshot.rgb)
             
             # PIL Image'i Tkinter PhotoImage'e çevir
-            photo = ImageTk.PhotoImage(screenshot)
+            photo = ImageTk.PhotoImage(screenshot_pil)
             
             # Görüntüyü göster
             self.image_label.config(image=photo, text="")
@@ -212,11 +220,15 @@ class ScreenSelector:
                 
                 x1, y1, x2, y2 = self.selection_coords
                 
-                # Ekran görüntüsü al
-                screenshot = pyautogui.screenshot(region=(x1, y1, x2-x1, y2-y1))
+                # MSS ile hızlı ekran görüntüsü al
+                monitor = {"top": y1, "left": x1, "width": x2-x1, "height": y2-y1}
+                screenshot = self.sct.grab(monitor)
+                
+                # MSS görüntüsünü PIL Image'e çevir
+                screenshot_pil = Image.frombytes("RGB", screenshot.size, screenshot.rgb)
                 
                 # Kart tespiti yap
-                detected_cards = self.card_detector.detect_cards(screenshot)
+                detected_cards = self.card_detector.detect_cards(screenshot_pil)
                 
                 # Kart görüntüleme sistemini güncelle
                 if self.card_display:

@@ -10,6 +10,7 @@ class CardDisplay:
         self.card_labels = {}
         self.card_images = {}
         self.card_pil_images = {}  # Orijinal PIL görüntüleri sakla
+        self.card_filtered_images = {}  # Filtrelenmiş görüntüleri sakla
         self.detected_cards = set()
         self.setup_card_grid()
         
@@ -78,43 +79,59 @@ class CardDisplay:
                     self.card_images[card_name] = photo
                     self.card_pil_images[card_name] = resized_image  # Orijinal PIL görüntüsünü sakla
                     
+                    # Filtrelenmiş görüntüyü önceden oluştur ve sakla
+                    self.create_filtered_image(card_name, resized_image)
+                    
                 except Exception as e:
                     print(f"Kart yüklenemedi: {filename} - {str(e)}")
                     
                     
         except Exception as e:
             print(f"Kart grid'i oluşturulurken hata: {str(e)}")
+    
+    def create_filtered_image(self, card_name, original_image):
+        """Kart için filtrelenmiş görüntüyü önceden oluştur"""
+        try:
+            # Yarı şeffaf siyah filtre oluştur
+            black_filter = Image.new('RGBA', (50, 70), (0, 0, 0, 128))  # Alpha 128 = yarı şeffaf
+            
+            # Orijinal görüntüyü RGBA'ya çevir
+            original_rgba = original_image.convert('RGBA')
+            
+            # İki görüntüyü birleştir
+            combined_image = Image.alpha_composite(original_rgba, black_filter)
+            
+            # Tkinter PhotoImage'e çevir ve sakla
+            filtered_image = ImageTk.PhotoImage(combined_image)
+            self.card_filtered_images[card_name] = filtered_image
+            
+        except Exception as e:
+            print(f"Filtrelenmiş görüntü oluşturulurken hata: {str(e)}")
             
     def update_detected_cards(self, detected_cards):
-        """Tespit edilen kartları güncelle"""
+        """Tespit edilen kartları güncelle - sadece değişen kartları güncelle"""
         
-        # Yeni tespit edilen kartları mevcut listeye ekle
-        for card in detected_cards:
-            card_name = card['name']
+        # Yeni tespit edilen kartları set'e çevir (hızlı arama için)
+        new_detected_set = {card['name'] for card in detected_cards}
+        
+        # Sadece yeni tespit edilen kartları işaretle
+        for card_name in new_detected_set:
             if card_name in self.card_labels and card_name not in self.detected_cards:
                 label = self.card_labels[card_name]
                 # Siyah filtre uygula
                 self.apply_black_filter(label, card_name)
                 self.detected_cards.add(card_name)
                 print(f"Yeni kart tespit edildi: {card_name}")
+        
+        # Performans için print sayısını azalt
+        if len(new_detected_set) > 0:
+            print(f"Bu frame'de {len(new_detected_set)} yeni kart tespit edildi")
     
     def apply_black_filter(self, label, card_name):
-        """Kartın üzerine siyah filtre uygula"""
+        """Kartın üzerine siyah filtre uygula - önceden oluşturulmuş görüntüyü kullan"""
         try:
-            # Orijinal PIL görüntüsünü al
-            original_pil = self.card_pil_images[card_name]
-            
-            # Yarı şeffaf siyah filtre oluştur
-            black_filter = Image.new('RGBA', (50, 70), (0, 0, 0, 128))  # Alpha 128 = yarı şeffaf
-            
-            # Orijinal görüntüyü RGBA'ya çevir
-            original_rgba = original_pil.convert('RGBA')
-            
-            # İki görüntüyü birleştir
-            combined_image = Image.alpha_composite(original_rgba, black_filter)
-            
-            # Tkinter PhotoImage'e çevir
-            filtered_image = ImageTk.PhotoImage(combined_image)
+            # Önceden oluşturulmuş filtrelenmiş görüntüyü kullan
+            filtered_image = self.card_filtered_images[card_name]
             
             # Label'a uygula
             label.config(image=filtered_image)
