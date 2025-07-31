@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 import numpy as np
 import cv2
 import time
+import json
+import os
 from mss import mss
 from card_detector import CardDetector
 from card_display import CardDisplay
@@ -32,12 +34,18 @@ class ScreenSelector:
         # MSS instance'ı (hızlı ekran görüntüsü için)
         self.sct = mss()
         
+        # Kayıt dosyası yolu
+        self.settings_file = "selected_area.json"
+        
         # FPS sayacı değişkenleri
         self.fps_start_time = None
         self.fps_frame_count = 0
         self.fps_last_print_time = None
         
         self.setup_ui()
+        
+        # Kayıtlı alan varsa otomatik başlat
+        self.load_and_start_saved_area()
         
     def setup_ui(self):
         # Pencere kapatma event'i
@@ -164,6 +172,9 @@ class ScreenSelector:
         # Seçim koordinatlarını sakla
         self.selection_coords = (x1, y1, x2, y2)
         
+        # Seçilen alanı kaydet
+        self.save_selected_area(x1, y1, x2, y2)
+        
         # Otomatik yakalama başlat
         self.start_auto_capture()
         
@@ -271,11 +282,51 @@ class ScreenSelector:
                 
                 # Card detector'daki tespit edilen kartları da temizle
                 self.card_detector.detected_cards.clear()
+                self.card_detector.previous_frame = None  # Önceki frame'i de temizle
                 
                 print("Tüm kartlar reset edildi!")
                 
         except Exception as e:
             print(f"Reset hatası: {str(e)}")
+    
+    def load_and_start_saved_area(self):
+        """Kayıtlı alanı yükle ve otomatik başlat"""
+        try:
+            if os.path.exists(self.settings_file):
+                with open(self.settings_file, 'r') as f:
+                    saved_area = json.load(f)
+                
+                x1, y1, x2, y2 = saved_area['x1'], saved_area['y1'], saved_area['x2'], saved_area['y2']
+                
+                print(f"Kayıtlı alan yüklendi: ({x1}, {y1}) - ({x2}, {y2})")
+                
+                # Seçim bilgilerini güncelle ve otomatik yakalama başlat
+                self.update_selection_info(x1, y1, x2, y2)
+                
+            else:
+                print("Kayıtlı alan bulunamadı, manuel seçim bekleniyor...")
+                
+        except Exception as e:
+            print(f"Kayıtlı alan yüklenirken hata: {str(e)}")
+    
+    def save_selected_area(self, x1, y1, x2, y2):
+        """Seçilen alanı kaydet"""
+        try:
+            area_data = {
+                'x1': x1,
+                'y1': y1,
+                'x2': x2,
+                'y2': y2,
+                'timestamp': time.time()
+            }
+            
+            with open(self.settings_file, 'w') as f:
+                json.dump(area_data, f, indent=2)
+            
+            print(f"Seçilen alan kaydedildi: ({x1}, {y1}) - ({x2}, {y2})")
+            
+        except Exception as e:
+            print(f"Alan kaydedilirken hata: {str(e)}")
     
     def on_closing(self):
         """Pencere kapatılırken çağrılır"""

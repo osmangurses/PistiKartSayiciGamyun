@@ -9,6 +9,7 @@ class CardDetector:
         self.cards_folder = cards_folder
         self.card_templates = {}
         self.detected_cards = set()  # Tespit edilen kartları sakla
+        self.previous_frame = None  # Önceki frame'i sakla
         self.setup_logging()
         self.load_card_templates()
         
@@ -32,7 +33,7 @@ class CardDetector:
                 return
                 
             # Küçültme oranı (0.5x = yarı boyut)
-            scale_factor = 0.5
+            scale_factor = 1
                 
             for filename in os.listdir(self.cards_folder):
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
@@ -59,7 +60,7 @@ class CardDetector:
             self.logger.error(f"Kart şablonları yüklenirken hata: {str(e)}")
             
     def detect_cards(self, screenshot):
-        """Ekran görüntüsünde kartları tespit et"""
+        """Ekran görüntüsünde kartları tespit et - optimize edilmiş"""
         if not self.card_templates:
             self.logger.warning("Kart şablonları yüklenmemiş!")
             return []
@@ -74,23 +75,44 @@ class CardDetector:
                 screenshot_cv = screenshot
             
             # Ekran görüntüsünü küçült (şablonlarla aynı oranda)
-            scale_factor = 0.5
+            scale_factor = 1
             height, width = screenshot_cv.shape[:2]
             new_width = int(width * scale_factor)
             new_height = int(height * scale_factor)
             screenshot_resized = cv2.resize(screenshot_cv, (new_width, new_height), interpolation=cv2.INTER_AREA)
+            
+            # Frame değişikliği kontrolü
+            if self.previous_frame is not None:
+                # Boyut kontrolü - aynı boyutta olmalı
+                if screenshot_resized.shape == self.previous_frame.shape:
+                    # Önceki frame ile karşılaştır
+                    frame_diff = cv2.absdiff(screenshot_resized, self.previous_frame)
+                    mean_diff = cv2.mean(frame_diff)[0]
+                    
+                    # Eğer frame değişikliği çok az ise, tarama yapma
+                    if mean_diff < 5.0:  # Eşik değeri
+                        self.logger.info("Frame değişikliği yok, tarama atlandı")
+                        return []
+                else:
+                    # Boyut farklıysa önceki frame'i güncelle ve devam et
+                    self.logger.info("Frame boyutu değişti, tarama devam ediyor")
+            
+            # Tarama başladığını logla
+            self.logger.info("Kart taraması başladı...")
                 
             # Her kart şablonu için kontrol et (sadece tespit edilmemiş olanlar)
+            cards_checked = 0
             for card_name, template in self.card_templates.items():
                 # Eğer kart zaten tespit edilmişse, atla
                 if card_name in self.detected_cards:
                     continue
                     
+                cards_checked += 1
                 result = cv2.matchTemplate(screenshot_resized, template, cv2.TM_CCOEFF_NORMED)
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
                 
-                # Eşik değeri (küçültülmüş görüntüler için biraz düşük)
-                threshold = 0.95
+                # Eşik değeri
+                threshold = 0.99
                 
                 if max_val >= threshold:
                     detected_cards.append({
@@ -99,7 +121,17 @@ class CardDetector:
                         'location': max_loc
                     })
                     self.detected_cards.add(card_name)  # Tespit edilen kartı listeye ekle
-                    self.logger.info(f"Kart tespit edildi: {card_name} (güven: {max_val:.2f})")
+                    self.logger.info(f"Kart tespit edildi: {card_name} (güven: {max_val:.2f}) - {cards_checked} kart tarandı")
+                    
+                    # İlk eşleşme bulunduğunda diğer kartları taramayı durdur
+                    break
+            
+            # Eğer hiç eşleşme bulunmadıysa, bu frame'i previous frame olarak ata
+            if not detected_cards:
+                self.previous_frame = screenshot_resized.copy()
+                self.logger.info(f"Hiç eşleşme bulunamadı - {cards_checked} kart tarandı, frame previous frame olarak atandı")
+            else:
+                self.logger.info(f"Eşleşme bulundu, frame previous frame olarak atanmadı")
                     
         except Exception as e:
             self.logger.error(f"Kart tespiti sırasında hata: {str(e)}")
