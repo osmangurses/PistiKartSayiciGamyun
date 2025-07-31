@@ -8,6 +8,7 @@ class CardDetector:
     def __init__(self, cards_folder="CROPPEDCARDS"):
         self.cards_folder = cards_folder
         self.card_templates = {}
+        self.detected_cards = set()  # Tespit edilen kartları sakla
         self.setup_logging()
         self.load_card_templates()
         
@@ -63,8 +64,12 @@ class CardDetector:
             else:
                 screenshot_cv = screenshot
                 
-            # Her kart şablonu için kontrol et
+            # Her kart şablonu için kontrol et (sadece tespit edilmemiş olanlar)
             for card_name, template in self.card_templates.items():
+                # Eğer kart zaten tespit edilmişse, atla
+                if card_name in self.detected_cards:
+                    continue
+                    
                 result = cv2.matchTemplate(screenshot_cv, template, cv2.TM_CCOEFF_NORMED)
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
                 
@@ -77,6 +82,7 @@ class CardDetector:
                         'confidence': max_val,
                         'location': max_loc
                     })
+                    self.detected_cards.add(card_name)  # Tespit edilen kartı listeye ekle
                     self.logger.info(f"Kart tespit edildi: {card_name} (güven: {max_val:.2f})")
                     
         except Exception as e:

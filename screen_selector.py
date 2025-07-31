@@ -4,14 +4,15 @@ import pyautogui
 from PIL import Image, ImageTk
 import numpy as np
 import cv2
+import time
 from card_detector import CardDetector
 from card_display import CardDisplay
 
 class ScreenSelector:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Ekran Seçici")
-        self.root.geometry("800x600")
+        self.root.title("KART SAYICI")
+        self.root.geometry("900x375")
         self.root.attributes('-topmost', True)  # Her zaman en üstte
         
         # Seçim değişkenleri
@@ -27,6 +28,11 @@ class ScreenSelector:
         # Kart detektörü
         self.card_detector = CardDetector()
         
+        # FPS sayacı değişkenleri
+        self.fps_start_time = None
+        self.fps_frame_count = 0
+        self.fps_last_print_time = None
+        
         self.setup_ui()
         
     def setup_ui(self):
@@ -37,16 +43,27 @@ class ScreenSelector:
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        # Başlık
-        title_label = ttk.Label(main_frame, text="Ekran Seçici", font=("Arial", 16, "bold"))
-        title_label.grid(row=0, column=0, columnspan=2, pady=(0, 20))
+       
         
-        # Butonlar
-        button_frame = ttk.Frame(main_frame)
-        button_frame.grid(row=1, column=0, columnspan=2, pady=(0, 20))
+        # Ana içerik frame - butonlar ve kartlar yan yana
+        content_frame = ttk.Frame(main_frame)
+        content_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        self.select_button = ttk.Button(button_frame, text="Ekran Seç", command=self.start_selection)
-        self.select_button.pack()
+        # Sol tarafta butonlar için frame
+        buttons_frame = ttk.Frame(content_frame)
+        buttons_frame.pack(side=tk.LEFT, padx=(0, 10), fill=tk.Y)
+        
+        # Butonlar için iç frame (yarı yükseklik için)
+        button_container = ttk.Frame(buttons_frame)
+        button_container.pack(expand=True, fill=tk.BOTH)
+        
+        # Alan seç butonu - üst yarı
+        self.select_button = ttk.Button(button_container, text="ALAN SEÇ", command=self.start_selection)
+        self.select_button.pack(side=tk.TOP, expand=True, fill=tk.BOTH, pady=(0, 2))
+        
+        # Reset butonu - alt yarı
+        self.reset_button = ttk.Button(button_container, text="RESET", command=self.reset_all_cards)
+        self.reset_button.pack(side=tk.BOTTOM, expand=True, fill=tk.BOTH, pady=(2, 0))
         
         # Seçim bilgileri kaldırıldı - sadece kart grid'i gösterilecek
         
@@ -56,11 +73,11 @@ class ScreenSelector:
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         main_frame.columnconfigure(0, weight=1)
-        main_frame.rowconfigure(2, weight=1)
+        main_frame.rowconfigure(1, weight=1)
         
         # Kart görüntüleme sistemi
         try:
-            self.card_display = CardDisplay(main_frame)
+            self.card_display = CardDisplay(content_frame)
         except Exception as e:
             print(f"CardDisplay oluşturulurken hata: {str(e)}")
             self.card_display = None
@@ -188,6 +205,11 @@ class ScreenSelector:
         """Otomatik yakalama döngüsü"""
         if self.auto_capture_active and hasattr(self, 'selection_coords'):
             try:
+                # FPS hesaplama başlat
+                if self.fps_start_time is None:
+                    self.fps_start_time = time.time()
+                    self.fps_frame_count = 0
+                
                 x1, y1, x2, y2 = self.selection_coords
                 
                 # Ekran görüntüsü al
@@ -200,12 +222,49 @@ class ScreenSelector:
                 if self.card_display:
                     self.card_display.update_detected_cards(detected_cards)
                 
+                # FPS hesaplama
+                self.fps_frame_count += 1
+                current_time = time.time()
+                
+                # Her 1 saniyede bir FPS yazdır
+                if self.fps_last_print_time is None or current_time - self.fps_last_print_time >= 1.0:
+                    elapsed_time = current_time - self.fps_start_time
+                    fps = self.fps_frame_count / elapsed_time if elapsed_time > 0 else 0
+                    print(f"FPS: {fps:.1f} - Frame: {self.fps_frame_count} - Time: {elapsed_time:.1f}s")
+                    
+                    # FPS sayacını sıfırla
+                    self.fps_start_time = current_time
+                    self.fps_frame_count = 0
+                    self.fps_last_print_time = current_time
+                
             except Exception as e:
                 print(f"Otomatik yakalama hatası: {str(e)}")
                 
             # 0.1 saniye sonra tekrar çalıştır
             self.auto_capture_job = self.root.after(100, self.auto_capture)
             
+    def reset_all_cards(self):
+        """Tüm kartları reset et - tespit edilmemiş olarak işaretle"""
+        try:
+            if self.card_display:
+                # Tüm kartları normal haline döndür
+                for card_name in self.card_display.card_labels:
+                    label = self.card_display.card_labels[card_name]
+                    # Orijinal görüntüyü geri yükle
+                    label.config(image=self.card_display.card_images[card_name])
+                    label.image = self.card_display.card_images[card_name]
+                
+                # Tespit edilen kartları temizle
+                self.card_display.detected_cards.clear()
+                
+                # Card detector'daki tespit edilen kartları da temizle
+                self.card_detector.detected_cards.clear()
+                
+                print("Tüm kartlar reset edildi!")
+                
+        except Exception as e:
+            print(f"Reset hatası: {str(e)}")
+    
     def on_closing(self):
         """Pencere kapatılırken çağrılır"""
         self.stop_auto_capture()
