@@ -17,11 +17,16 @@ class CardDisplay:
     def setup_card_grid(self):
         """Kart grid'ini oluştur"""
         # Ana frame - parent_frame artık content_frame
-        self.cards_frame = ttk.LabelFrame(self.parent_frame, text="KALAN KARTLAR", padding="10")
-        self.cards_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.cards_frame = ttk.LabelFrame(
+            self.parent_frame, 
+            text="🎴 KALAN KARTLAR", 
+            padding="15",
+            style="Modern.TLabelframe"
+        )
+        self.cards_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(10, 0))
         
         # Grid frame
-        self.grid_frame = ttk.Frame(self.cards_frame)
+        self.grid_frame = ttk.Frame(self.cards_frame, style="Modern.TFrame")
         self.grid_frame.pack(expand=True, fill=tk.BOTH)
         
         # Kartları yükle ve göster
@@ -67,9 +72,20 @@ class CardDisplay:
                     
                     # Label oluştur
                     card_name = os.path.splitext(filename)[0]
-                    label = tk.Label(self.grid_frame, image=photo, relief=tk.RAISED, borderwidth=2, cursor="hand2")
+                    label = tk.Label(
+                        self.grid_frame,
+                        image=photo,
+                        relief=tk.FLAT,
+                        borderwidth=0,  # Border yok
+                        bg="#FFFFFF",
+                        cursor="hand2"
+                    )
                     label.image = photo  # Referansı sakla
-                    label.grid(row=row, column=col, padx=2, pady=2)
+                    label.grid(row=row, column=col, padx=3, pady=3)
+                    
+                    # Hover efektleri ekle
+                    label.bind('<Enter>', lambda e, lbl=label: self.on_card_hover_enter(lbl))
+                    label.bind('<Leave>', lambda e, lbl=label: self.on_card_hover_leave(lbl))
                     
                     # Tıklama event'i ekle
                     label.bind('<Button-1>', lambda e, name=card_name: self.on_card_click(name))
@@ -140,6 +156,16 @@ class CardDisplay:
         except Exception as e:
             print(f"Siyah filtre uygulanırken hata: {str(e)}")
     
+    def on_card_hover_enter(self, label):
+        """Kart üzerine gelindiğinde"""
+        # Sadece arka plan rengini değiştir, boyut değişmesin
+        label.configure(bg="#F0F8FF")  # Açık mavi hover efekti
+        
+    def on_card_hover_leave(self, label):
+        """Kart üzerinden ayrıldığında"""
+        # Normal arka plan rengine döndür
+        label.configure(bg="#FFFFFF")  # Beyaz arka plan
+        
     def on_card_click(self, card_name):
         """Kart tıklandığında çağrılır"""
         try:

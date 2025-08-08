@@ -11,12 +11,107 @@ from mss import mss
 from card_detector import CardDetector
 from card_display import CardDisplay
 
+class RoundedButton(tk.Canvas):
+    """Rounded köşeli modern buton sınıfı"""
+    def __init__(self, parent, text, command, bg_color="#4A90E2", fg_color="#222222", 
+                 width=120, height=35, corner_radius=10, **kwargs):
+        super().__init__(parent, width=width, height=height, background="#F4F4F9", 
+                        highlightthickness=0, **kwargs)
+        
+        self.command = command
+        self.bg_color = bg_color
+        self.fg_color = fg_color
+        self.corner_radius = corner_radius
+        self.text = text  # Metni sakla
+        
+        # Rounded rectangle çiz
+        self.draw_button()
+        
+        # Event'ler
+        self.bind("<Button-1>", self._on_click)
+        self.bind("<Enter>", self._on_enter)
+        self.bind("<Leave>", self._on_leave)
+        
+    def draw_button(self, hover=False):
+        """Rounded rectangle çiz"""
+        self.delete("all")  # Tüm canvas'ı temizle
+        
+        # Hover durumunda renk değiştir
+        color = self.bg_color
+        if hover:
+            if self.bg_color == "#4A90E2":
+                color = "#357ABD"
+            elif self.bg_color == "#E74C3C":
+                color = "#C0392B"
+            elif self.bg_color == "#27AE60":  # Yeşil hover
+                color = "#229954"
+        
+        # Rounded rectangle çiz
+        self.create_rounded_rectangle(0, 0, self.winfo_reqwidth(), self.winfo_reqheight(), 
+                                    self.corner_radius, fill=color, tags="button_bg")
+        
+        # Metni yeniden çiz
+        self.create_text(self.winfo_reqwidth()//2, self.winfo_reqheight()//2, 
+                        text=self.text, fill=self.fg_color, 
+                        font=("Segoe UI", 11, "bold"))
+        
+    def create_rounded_rectangle(self, x1, y1, x2, y2, radius, **kwargs):
+        """Rounded rectangle oluştur"""
+        # Köşe noktaları
+        points = [
+            x1 + radius, y1,
+            x2 - radius, y1,
+            x2, y1,
+            x2, y1 + radius,
+            x2, y2 - radius,
+            x2, y2,
+            x2 - radius, y2,
+            x1 + radius, y2,
+            x1, y2,
+            x1, y2 - radius,
+            x1, y1 + radius,
+            x1, y1
+        ]
+        
+        # Rounded rectangle çiz
+        self.create_polygon(points, smooth=True, **kwargs)
+        
+    def _on_click(self, event):
+        """Tıklama event'i"""
+        if self.command:
+            self.command()
+            
+    def _on_enter(self, event):
+        """Mouse üzerine gelince"""
+        self.draw_button(hover=True)
+        
+    def _on_leave(self, event):
+        """Mouse ayrılınca"""
+        self.draw_button(hover=False)
+        
+    def update_button(self, text=None, bg_color=None, fg_color=None):
+        """Buton metnini ve rengini güncelle"""
+        if text is not None:
+            self.text = text
+        if bg_color is not None:
+            self.bg_color = bg_color
+        if fg_color is not None:
+            self.fg_color = fg_color
+        self.draw_button()
+
 class ScreenSelector:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("KART SAYICI")
-        self.root.geometry("900x375")
+        self.root.title("🎴 KART SAYICI")
+        self.root.geometry("1000x400")  # Daha geniş pencere
         self.root.attributes('-topmost', True)  # Her zaman en üstte
+        self.root.resizable(True, True)  # Boyut değiştirilebilir
+        
+        # Pencere ikonu ekle (varsa)
+        try:
+            self.root.iconbitmap("icon.ico")
+        except:
+            pass  # İkon yoksa devam et
         
         # Seçim değişkenleri
         self.start_x = None
@@ -27,6 +122,9 @@ class ScreenSelector:
         self.selection_window = None
         self.auto_capture_active = False
         self.auto_capture_job = None
+        
+        # Manuel mod değişkeni
+        self.manual_mode = tk.BooleanVar(value=False)
         
         # Kart detektörü
         self.card_detector = CardDetector()
@@ -44,38 +142,87 @@ class ScreenSelector:
         
         self.setup_ui()
         
-        # Kayıtlı alan varsa otomatik başlat
-        self.load_and_start_saved_area()
+        # Kayıtlı alan varsa sadece yükle, otomatik başlatma
+        self.load_saved_area()
         
     def setup_ui(self):
         # Pencere kapatma event'i
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         
+        # Havalı stil tanımları
+        self.setup_styles()
+        
         # Ana frame
-        main_frame = ttk.Frame(self.root, padding="10")
+        main_frame = ttk.Frame(self.root, padding="20", style="Modern.TFrame")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-       
-        
         # Ana içerik frame - butonlar ve kartlar yan yana
-        content_frame = ttk.Frame(main_frame)
+        content_frame = ttk.Frame(main_frame, style="Modern.TFrame")
         content_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        # Sol tarafta butonlar için frame
-        buttons_frame = ttk.Frame(content_frame)
-        buttons_frame.pack(side=tk.LEFT, padx=(0, 10), fill=tk.Y)
+        # Sol tarafta butonlar için frame - sabit genişlik
+        buttons_frame = ttk.Frame(content_frame, style="Modern.TFrame")
+        buttons_frame.pack(side=tk.LEFT, padx=(0, 20), fill=tk.Y)
+        buttons_frame.configure(width=180)  # Sabit genişlik
+        buttons_frame.pack_propagate(False)  # Boyut sabit kalsın
         
-        # Butonlar için iç frame (yarı yükseklik için)
-        button_container = ttk.Frame(buttons_frame)
-        button_container.pack(expand=True, fill=tk.BOTH)
+        # Butonlar için ana container
+        button_container = ttk.Frame(buttons_frame, style="Modern.TFrame")
+        button_container.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
         
-        # Alan seç butonu - üst yarı
-        self.select_button = ttk.Button(button_container, text="ALAN SEÇ", command=self.start_selection)
-        self.select_button.pack(side=tk.TOP, expand=True, fill=tk.BOTH, pady=(0, 2))
+        # Üst kısım - Kontrol butonları
+        top_frame = ttk.Frame(button_container, style="Modern.TFrame")
+        top_frame.pack(side=tk.TOP, fill=tk.X, pady=(0, 15))
         
-        # Reset butonu - alt yarı
-        self.reset_button = ttk.Button(button_container, text="RESET", command=self.reset_all_cards)
-        self.reset_button.pack(side=tk.BOTTOM, expand=True, fill=tk.BOTH, pady=(2, 0))
+        # Alan seç butonu - sabit boyut
+        self.select_button = RoundedButton(
+            top_frame, 
+            text="🎯 ALAN SEÇ", 
+            command=self.start_selection,
+            bg_color="#4A90E2",
+            fg_color="#222222",
+            width=160,
+            height=45
+        )
+        self.select_button.pack(side=tk.TOP, fill=tk.X, pady=(0, 12))
+        
+        # Manuel checkbox - modern stil
+        self.manual_checkbox = ttk.Checkbutton(
+            top_frame, 
+            text="🔒 MANUEL MOD", 
+            variable=self.manual_mode,
+            command=self.on_manual_mode_change,
+            style="Modern.TCheckbutton"
+        )
+        self.manual_checkbox.pack(side=tk.TOP, fill=tk.X, pady=(0, 12))
+        
+        # Başlat/Durdur butonu - sabit boyut (başlangıçta yeşil)
+        self.start_stop_button = RoundedButton(
+            top_frame, 
+            text="▶️ BAŞLAT", 
+            command=self.toggle_auto_capture,
+            bg_color="#27AE60",  # Başlangıçta yeşil
+            fg_color="#222222",
+            width=160,
+            height=45
+        )
+        self.start_stop_button.pack(side=tk.TOP, fill=tk.X, pady=(0, 12))
+        
+        # Alt kısım - Reset butonu
+        bottom_frame = ttk.Frame(button_container, style="Modern.TFrame")
+        bottom_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=(15, 0))
+        
+        # Reset butonu - sabit boyut
+        self.reset_button = RoundedButton(
+            bottom_frame, 
+            text="🔄 RESET", 
+            command=self.reset_all_cards,
+            bg_color="#E74C3C",
+            fg_color="#222222",
+            width=160,
+            height=45
+        )
+        self.reset_button.pack(side=tk.BOTTOM, fill=tk.X)
         
         # Seçim bilgileri kaldırıldı - sadece kart grid'i gösterilecek
         
@@ -93,6 +240,74 @@ class ScreenSelector:
         except Exception as e:
             print(f"CardDisplay oluşturulurken hata: {str(e)}")
             self.card_display = None
+            
+    def setup_styles(self):
+        """Modern stil tanımları"""
+        style = ttk.Style()
+        
+        # Ana pencere arka planı
+        self.root.configure(bg="#F4F4F9")
+        
+        # Modern buton stili
+        style.configure("Modern.TButton",
+                      background="#4A90E2",
+                      foreground="#222222",  # Siyah metin
+                      borderwidth=0,
+                      relief="flat",
+                      font=("Segoe UI", 10, "bold"),
+                      padding=(15, 8))
+        
+        # Reset butonu stili (kırmızı)
+        style.configure("Reset.TButton",
+                      background="#E74C3C",
+                      foreground="#222222",  # Siyah metin
+                      borderwidth=0,
+                      relief="flat",
+                      font=("Segoe UI", 10, "bold"),
+                      padding=(15, 8))
+        
+        # Modern checkbox stili
+        style.configure("Modern.TCheckbutton",
+                      background="#4A90E2",
+                      foreground="#222222",  # Siyah metin
+                      borderwidth=0,
+                      font=("Segoe UI", 9, "bold"),
+                      padding=(10, 5))
+        
+        # Hover efektleri
+        style.map("Modern.TButton",
+                 background=[("active", "#357ABD")],
+                 relief=[("pressed", "flat")])
+        
+        style.map("Reset.TButton",
+                 background=[("active", "#C0392B")],
+                 relief=[("pressed", "flat")])
+        
+        style.map("Modern.TCheckbutton",
+                 background=[("active", "#357ABD")])
+        
+        # Frame stilleri
+        style.configure("Modern.TFrame",
+                      background="#F4F4F9",
+                      borderwidth=1,
+                      relief="flat")
+        
+        # Label stilleri
+        style.configure("Modern.TLabel",
+                      background="#F4F4F9",
+                      foreground="#222222",
+                      font=("Segoe UI", 9))
+        
+        # LabelFrame stili
+        style.configure("Modern.TLabelframe",
+                      background="#F4F4F9",
+                      foreground="#222222",
+                      font=("Segoe UI", 10, "bold"))
+        
+        style.configure("Modern.TLabelframe.Label",
+                      background="#F4F4F9",
+                      foreground="#222222",
+                      font=("Segoe UI", 10, "bold"))
         
     def start_selection(self):
         """Ekran seçimi başlat"""
@@ -175,8 +390,8 @@ class ScreenSelector:
         # Seçilen alanı kaydet
         self.save_selected_area(x1, y1, x2, y2)
         
-        # Otomatik yakalama başlat
-        self.start_auto_capture()
+        # Otomatik yakalama başlatma - kullanıcı butona bassın
+        # self.start_auto_capture()
         
     def capture_selected_area(self):
         """Seçili alanı yakala"""
@@ -212,6 +427,11 @@ class ScreenSelector:
         if hasattr(self, 'selection_coords'):
             self.auto_capture_active = True
             self.auto_capture()
+            # Buton metnini ve rengini güncelle (kırmızı)
+            self.start_stop_button.update_button(
+                text="⏸️ DURDUR",
+                bg_color="#E74C3C"  # Kırmızı
+            )
             
     def stop_auto_capture(self):
         """Otomatik yakalamayı durdur"""
@@ -219,10 +439,42 @@ class ScreenSelector:
         if self.auto_capture_job:
             self.root.after_cancel(self.auto_capture_job)
             self.auto_capture_job = None
+        # Buton metnini ve rengini güncelle (yeşil)
+        self.start_stop_button.update_button(
+            text="▶️ BAŞLAT",
+            bg_color="#27AE60"  # Yeşil
+        )
+        
+    def toggle_auto_capture(self):
+        """Başlat/Durdur toggle"""
+        if self.auto_capture_active:
+            self.stop_auto_capture()
+        else:
+            self.start_auto_capture()
+            
+    def on_manual_mode_change(self):
+        """Manuel mod değiştiğinde"""
+        if self.manual_mode.get():
+            print("🔒 Manuel mod aktif - otomatik tarama durduruldu")
+            self.stop_auto_capture()
+        else:
+            print("🔓 Manuel mod deaktif - otomatik tarama başlatılabilir")
+            
+    def stop_auto_capture(self):
+        """Otomatik yakalamayı durdur"""
+        self.auto_capture_active = False
+        if self.auto_capture_job:
+            self.root.after_cancel(self.auto_capture_job)
+            self.auto_capture_job = None
+        # Buton metnini ve rengini güncelle (yeşil)
+        self.start_stop_button.update_button(
+            text="▶️ BAŞLAT",
+            bg_color="#27AE60"  # Yeşil
+        )
             
     def auto_capture(self):
         """Otomatik yakalama döngüsü"""
-        if self.auto_capture_active and hasattr(self, 'selection_coords'):
+        if self.auto_capture_active and hasattr(self, 'selection_coords') and not self.manual_mode.get():
             try:
                 # FPS hesaplama başlat
                 if self.fps_start_time is None:
@@ -281,7 +533,7 @@ class ScreenSelector:
                 self.card_display.detected_cards.clear()
                 
                 # Card detector'daki tespit edilen kartları da temizle
-                self.card_detector.detected_cards.clear()
+                self.card_detector.detected_cards.clear()  # Set'i temizle
                 self.card_detector.previous_frame = None  # Önceki frame'i de temizle
                 
                 print("Tüm kartlar reset edildi!")
@@ -289,8 +541,8 @@ class ScreenSelector:
         except Exception as e:
             print(f"Reset hatası: {str(e)}")
     
-    def load_and_start_saved_area(self):
-        """Kayıtlı alanı yükle ve otomatik başlat"""
+    def load_saved_area(self):
+        """Kayıtlı alanı sadece yükle, otomatik başlatma"""
         try:
             if os.path.exists(self.settings_file):
                 with open(self.settings_file, 'r') as f:
@@ -300,8 +552,32 @@ class ScreenSelector:
                 
                 print(f"Kayıtlı alan yüklendi: ({x1}, {y1}) - ({x2}, {y2})")
                 
-                # Seçim bilgilerini güncelle ve otomatik yakalama başlat
+                # Seçim bilgilerini güncelle
                 self.update_selection_info(x1, y1, x2, y2)
+                
+            else:
+                print("Kayıtlı alan bulunamadı, manuel seçim bekleniyor...")
+                
+        except Exception as e:
+            print(f"Kayıtlı alan yüklenirken hata: {str(e)}")
+            
+    def load_and_start_saved_area(self):
+        """Kayıtlı alanı yükle ve otomatik başlat (manuel başlatma için)"""
+        try:
+            if os.path.exists(self.settings_file):
+                with open(self.settings_file, 'r') as f:
+                    saved_area = json.load(f)
+                
+                x1, y1, x2, y2 = saved_area['x1'], saved_area['y1'], saved_area['x2'], saved_area['y2']
+                
+                print(f"Kayıtlı alan yüklendi: ({x1}, {y1}) - ({x2}, {y2})")
+                
+                # Seçim bilgilerini güncelle
+                self.update_selection_info(x1, y1, x2, y2)
+                
+                # Manuel mod değilse otomatik başlat
+                if not self.manual_mode.get():
+                    self.start_auto_capture()
                 
             else:
                 print("Kayıtlı alan bulunamadı, manuel seçim bekleniyor...")
